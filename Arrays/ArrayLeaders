@@ -1,0 +1,19 @@
+//https://www.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/
+
+class Solution {
+    // Function to find the leaders in the array.
+    static ArrayList<Integer> leaders(int n, int arr[]) {
+        // Your code here
+        int max = arr[arr.length-1];
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        res.add(max);
+        for(int k = arr.length-2;k>=0;k--){
+            if(arr[k]>=max){
+                max = arr[k];
+                res.add(max);
+            }
+        }
+        Collections.reverse(res);
+        return res;
+    }
+}
