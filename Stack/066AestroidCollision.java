@@ -3,32 +3,48 @@
 class Solution {
     public int[] asteroidCollision(int[] asteroids) {
         Stack<Integer> st = new Stack<>();
+        int sign = 0;
         for( int i = 0;i < asteroids.length;i++){
             if(asteroids[i] > 0){
                 st.push(asteroids[i]);
+                sign = 1;
             }else{
+                sign = 0;
                 if(st.isEmpty() == true || st.peek() < 0){
                     st.push(asteroids[i]);
                     continue;
                 }
                 if(st.peek() == Math.abs(asteroids[i])){
                     st.pop();
-                    break;
+                    continue;
                 }
                 else if(st.peek() > Math.abs(asteroids[i])){
-                    break;
+                    continue;
                 }
                 else if(st.peek() < Math.abs(asteroids[i])){
-                    while(!st.isEmpty() && st.peek() < Math.abs(asteroids[i]) && ( (st.peek() > 0 && asteroids[i] < 0) || (st.peek() < 0 && asteroids[i] > 0) )){
-                        st.pop();
+                    int sign_peek = 0;
+                    if(st.peek() > 0){
+                        sign_peek = 1;
                     }
-                    if((st.peek() < 0 && asteroids[i] < 0) || st.peek() > 0 && asteroids[i] > 0{
+                    int eq = 0;
+                    while(!st.isEmpty() && st.peek() <= Math.abs(asteroids[i]) && sign_peek != sign){
+                        st.pop();
+                        if(st.peek() > 0){
+                            sign_peek = 1;
+                        }else{
+                            sign_peek = 0;
+                        }
+                        
+                        if(!st.isEmpty() && st.peek() == Math.abs(asteroids[i])){
+                            eq = 1;
+                        }
+                    }
+                    if( sign_peek == sign && eq!=1){
                         st.push(asteroids[i]);
                     }
                 }
             }
         }
-        // System.out.println(st.size());
         int res[] = new int[st.size()];
         int n = st.size();
         for(int k = 0; k < n; k ++){
