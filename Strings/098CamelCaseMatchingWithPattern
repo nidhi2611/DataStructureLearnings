@@ -1,0 +1,28 @@
+// https://www.geeksforgeeks.org/batch/gfg-160-problems/track/string-bonus-problems/problem/camelcase-pattern-matching2259
+
+class Solution {
+    public List<String> camelCase(String[] arr, String pat) {
+        List<String> res = new LinkedList<>();
+        for( int i = 0 ; i < arr.length; i++){
+            String s = arr[i];
+            String sf = "";
+            for( int j = 0; j < s.length(); j++){
+                if( Character.isUpperCase(s.charAt(j))){
+                    sf = sf + s.charAt(j);
+                }
+            }
+            int count = 0;
+            for( int j = 0; j < pat.length();j++){
+                if( sf.length() >= pat.length() && sf.charAt(j) == pat.charAt(j)){
+                    count++;
+                    continue;
+                }
+            }
+            if( count == pat.length()){
+                res.add(s);
+            }
+            
+        }
+        return res;
+    }
+}
