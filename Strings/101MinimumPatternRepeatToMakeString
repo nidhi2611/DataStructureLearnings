@@ -1,0 +1,59 @@
+//https://www.geeksforgeeks.org/batch/gfg-160-problems/track/string-bonus-problems/problem/minimum-times-a-has-to-be-repeated-such-that-b-is-a-substring-of-it--170645
+
+class Solution {
+    static int minRepeats(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        int lps[] = new int[s2.length()];
+        calculatelps(lps,s2);
+        int x = (m + n - 1) / n;
+
+        if (KMSRep(s1, s2, x, lps))
+            return x;
+        if (KMSRep(s1, s2, x + 1, lps))
+            return x + 1;
+        return -1;
+    }
+    public static void calculatelps( int []lps, String s){
+        int len = 0;
+        int i = 1;
+        lps[0] = 0;
+        
+        while( i < s.length()){
+            if(s.charAt(i) == s.charAt(len)){
+                len++;
+                lps[i] = len;
+                i++;
+            }else{
+                if( len != 0 ){
+                    len = lps[len -1];
+                }else{
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+    }
+    public static boolean KMSRep(String txt,String pat, int rep, int[]lps){
+        int n = txt.length(), m = pat.length();
+        int i = 0, j = 0;
+
+        while (i < n * rep) {
+            
+            if (txt.charAt(i % n) == pat.charAt(j)) {
+                i++;
+                j++;
+                if (j == m) {
+                    return true;
+                }
+            } 
+            else {
+                if (j != 0)
+                    j = lps[j - 1];
+                else
+                    i++;
+            }
+        }
+        return false;
+    }
+};
